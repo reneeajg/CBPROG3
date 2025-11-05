@@ -11,4 +11,12 @@ public class Budget {
         this.budgetEnd = end;
         this.category = category;
     }
+
+    public void setBudgetAmt(float budgetAmt) {
+        this.budgetAmt = budgetAmt;
+    }
+
+    public float getBudgetAmt() {
+        return budgetAmt;
+    }
 }
