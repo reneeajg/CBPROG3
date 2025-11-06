@@ -17,13 +17,21 @@ public class ExpenseTracker {
     public void addBudget(float amount, DateTime start, DateTime end){
         budgetTracker.add(new Budget(amount, start, end));
     }
-    
-    
-    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo, 
+
+
+    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
                               DateTime dateTime, Category category){
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
+        
+        for(Budget b: budgetTracker){
+            if(b.getCategory() == category){
+                float budget = b.getBudgetAmt();
+                budget = budget - amount;
+                b.setBudgetAmt(budget);
+            }
+        }
     }
-    
+
     public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
                               DateTime dateTime){
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
@@ -31,15 +39,22 @@ public class ExpenseTracker {
 
     public void recordExpense(float amount, String currency, DateTime dateTime, Category category){
         expenseTracker.add(new Expense(amount, currency, dateTime));
+        for(Budget b: budgetTracker){
+            if(b.getCategory() == category){
+                float budget = b.getBudgetAmt();
+                budget = budget - amount;
+                b.setBudgetAmt(budget);
+            }
+        }
     }
-    
+
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenseTracker.add(new Expense(amount, currency, dateTime));
     }
-    
-    
 
-    
+
+
+
 
 
     public float getDailyTotalExp(DateTime date){
