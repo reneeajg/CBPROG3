@@ -9,18 +9,40 @@ public class DateTime {
         this.hour = hour;
         this.minute = minute;
     }
-    
+
     public DateTime(String year, String month, String day){
         this.year = year;
         this.month = month;
         this.day = day;
     }
 
-    public void getDate(){
-        System.out.println(this.month + "-" + this.day + "-" + this.year);
+    public DateTime(String year, String month){
+        this.year = year;
+        this.month = month;
     }
-    
-    public void getTime(){
-        System.out.println(this.hour + ":" + this.minute);
+
+    public void setTime(String hour, String minute){
+        this.hour = hour;
+        this.minute = minute;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public String getMinute() {
+        return minute;
     }
 }
