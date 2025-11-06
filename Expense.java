@@ -81,8 +81,8 @@ public class Expense {
     public String getExpenseReceiverAccNo() {
         return expenseReceiverAccNo;
     }
-
-
+    
+    // this is how we can avoid printing null values
     public String getExpenseSummary() {
         StringBuilder sb = new StringBuilder();
 
