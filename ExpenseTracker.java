@@ -6,6 +6,14 @@ public class ExpenseTracker {
     User user;
     ArrayList<Category> categories;
 
+    public ExpenseTracker(User user) {
+        this.user = user;
+        this.budgetTracker = new ArrayList<>();
+        this.expenseTracker = new ArrayList<>();
+        this.categories = new ArrayList<>();
+    }
+
+
     public Boolean login(String email, String password){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -22,7 +30,7 @@ public class ExpenseTracker {
     public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
                               DateTime dateTime, Category category){
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
-        
+
         for(Budget b: budgetTracker){
             if(b.getCategory() == category){
                 float budget = b.getBudgetAmt();
@@ -38,7 +46,7 @@ public class ExpenseTracker {
     }
 
     public void recordExpense(float amount, String currency, DateTime dateTime, Category category){
-        expenseTracker.add(new Expense(amount, currency, dateTime));
+        expenseTracker.add(new Expense(amount, currency, dateTime,category));
         for(Budget b: budgetTracker){
             if(b.getCategory() == category){
                 float budget = b.getBudgetAmt();
@@ -51,9 +59,6 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenseTracker.add(new Expense(amount, currency, dateTime));
     }
-
-
-
 
 
 
