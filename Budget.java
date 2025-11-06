@@ -1,12 +1,22 @@
+
+
 public class Budget {
 
     //attributes
-    private static final String budgetID = "B";
+    private static final String BUDGET_CODE = "B";
+    private static int bCounter = 0;
+    private String budgetID;
     private float budgetAmt;
     private DateTime budgetStart, budgetEnd;
     private Category category;
 
+    private void createBudID(){
+        bCounter++;
+        this.budgetID = BUDGET_CODE + String.format("%03d", bCounter);
+    }
+
     public Budget(float amount, DateTime start, DateTime end, Category category){
+        createBudID();
         this.budgetAmt = amount;
         this.budgetStart = start;
         this.budgetEnd = end;
@@ -14,6 +24,7 @@ public class Budget {
     }
 
     public Budget(float amount, DateTime start, DateTime end){
+        createBudID();
         this.budgetAmt = amount;
         this.budgetStart = start;
         this.budgetEnd = end;
@@ -23,9 +34,6 @@ public class Budget {
         this.budgetAmt = budgetAmt;
     }
 
-    public static String getBudgetID() {
-        return budgetID;
-    }
 
     public float getBudgetAmt() {
         return budgetAmt;
