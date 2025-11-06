@@ -81,12 +81,14 @@ public class Expense {
     public String getExpenseReceiverAccNo() {
         return expenseReceiverAccNo;
     }
-    
+
     // this is how we can avoid printing null values
     public String getExpenseSummary() {
         StringBuilder sb = new StringBuilder();
+        
+        sb.append("ExpenseID: ").append(expenseID);
 
-        sb.append("Amount: ").append(expenseAmount).append(" ").append(expenseCurrency).append(" | Date: ")
+        sb.append(" | Amount: ").append(expenseAmount).append(" ").append(expenseCurrency).append(" | Date: ")
                 .append(expenseDateTime.getDay())
                 .append("-").append(expenseDateTime.getMonth())
                 .append("-").append(expenseDateTime.getYear());
