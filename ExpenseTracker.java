@@ -32,7 +32,8 @@ public class ExpenseTracker {
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
 
         for(Budget b: budgetTracker){
-            if(b.getCategory() == category){
+            //decrease the budget in that category
+            if(b.getCategory() != null && b.getCategory().getCategoryName().equals(category.getCategoryName())){
                 float budget = b.getBudgetAmt();
                 budget = budget - amount;
                 b.setBudgetAmt(budget);
@@ -47,8 +48,9 @@ public class ExpenseTracker {
 
     public void recordExpense(float amount, String currency, DateTime dateTime, Category category){
         expenseTracker.add(new Expense(amount, currency, dateTime,category));
+        //decrease the budget in that category
         for(Budget b: budgetTracker){
-            if(b.getCategory() == category){
+            if(b.getCategory() != null && b.getCategory().getCategoryName().equals(category.getCategoryName())){
                 float budget = b.getBudgetAmt();
                 budget = budget - amount;
                 b.setBudgetAmt(budget);
@@ -132,14 +134,33 @@ public class ExpenseTracker {
         return totalExpense / expenseCount;
     }
 
+    public float getTotalCatExp(Category category){
+        float total = 0;
+        String cat = category.getCategoryName();
 
+        for(Expense e: expenseTracker){
+            if(e.getExpenseCategory().getCategoryName().equals(cat)){
+                total = total + e.getExpenseAmount();
+            }
+        }
 
+        return total;
+    }
 
+    public float getTotalExpense(){
+        float total = 0;
+        
+        for(Expense e: expenseTracker){
+            total = total + e.getExpenseAmount();
+        }
+        
+        return total;
+    }
 
+    public float getCatPercentage(Category category){
+        return getTotalCatExp(category)/getTotalExpense();
+        
+    }
 
-
-
-
-
-
+    
 }
