@@ -5,15 +5,8 @@ public class ExpenseTracker {
     ArrayList<Expense> expenseTracker;
     User user;
     ArrayList<Category> categories;
-
-    public ExpenseTracker(User user) {
-        this.user = user;
-        this.budgetTracker = new ArrayList<>();
-        this.expenseTracker = new ArrayList<>();
-        this.categories = new ArrayList<>();
-    }
-
-
+    
+    
     public Boolean login(String email, String password){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -61,14 +54,14 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenseTracker.add(new Expense(amount, currency, dateTime));
     }
-    
+
     public void viewExpensesbyCat(Category category){
         String cat = category.getCategoryName();
         int counter = 1;
         System.out.println(("EXPENSE ID | AMOUNT | DATE"));
         for(Expense e: expenseTracker){
             if(e.getExpenseCategory().getCategoryName().equals(cat)){
-                System.out.println(Expense.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " + 
+                System.out.println(Expense.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
                         " | " + e.getDate()); // this is not complete idk how to do it paaaa
             }
         }
