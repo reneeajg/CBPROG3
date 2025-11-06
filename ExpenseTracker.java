@@ -61,6 +61,18 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenseTracker.add(new Expense(amount, currency, dateTime));
     }
+    
+    public void viewExpensesbyCat(Category category){
+        String cat = category.getCategoryName();
+        int counter = 1;
+        System.out.println(("EXPENSE ID | AMOUNT | DATE"));
+        for(Expense e: expenseTracker){
+            if(e.getExpenseCategory().getCategoryName().equals(cat)){
+                System.out.println(Expense.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " + 
+                        " | " + e.getDate()); // this is not complete idk how to do it paaaa
+            }
+        }
+    }
 
 
 
@@ -149,18 +161,18 @@ public class ExpenseTracker {
 
     public float getTotalExpense(){
         float total = 0;
-        
+
         for(Expense e: expenseTracker){
             total = total + e.getExpenseAmount();
         }
-        
+
         return total;
     }
 
     public float getCatPercentage(Category category){
         return getTotalCatExp(category)/getTotalExpense();
-        
+
     }
 
-    
+
 }
