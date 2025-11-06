@@ -10,6 +10,37 @@ public class ExpenseTracker {
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
 
+    public void addBudget(float amount, DateTime start, DateTime end, Category category){
+        budgetTracker.add(new Budget(amount, start, end, category));
+    }
+
+    public void addBudget(float amount, DateTime start, DateTime end){
+        budgetTracker.add(new Budget(amount, start, end));
+    }
+    
+    
+    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo, 
+                              DateTime dateTime, Category category){
+        expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
+    }
+    
+    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
+                              DateTime dateTime){
+        expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
+    }
+
+    public void recordExpense(float amount, String currency, DateTime dateTime, Category category){
+        expenseTracker.add(new Expense(amount, currency, dateTime));
+    }
+    
+    public void recordExpense(float amount, String currency, DateTime dateTime){
+        expenseTracker.add(new Expense(amount, currency, dateTime));
+    }
+    
+    
+
+    
+
 
     public float getDailyTotalExp(DateTime date){
         float totalExpense = 0;
@@ -26,7 +57,7 @@ public class ExpenseTracker {
         }
         return totalExpense;
     }
-    
+
     public float computeDailyAve(DateTime date){
         float totalExpense = 0;
         int expenseCount = 0;
@@ -68,7 +99,7 @@ public class ExpenseTracker {
 
         for(Expense exp: expenseTracker){
             DateTime expDate = exp.getExpenseDateTime();
-            
+
             if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
                 expenseCount++;
             }
@@ -80,8 +111,8 @@ public class ExpenseTracker {
 
         return totalExpense / expenseCount;
     }
-    
-    
+
+
 
 
 
