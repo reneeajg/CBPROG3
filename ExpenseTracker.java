@@ -689,15 +689,15 @@ public class ExpenseTracker {
             int choice = 0;
             boolean validChoice = false;
 
-            System.out.println("[1] Add Digital Bank\n[2] Add New Expense\n[3] Add New Budget\n[4] Add Category\n[5] View Expenses/Budgets\n[6] Quit");
+            System.out.println("[1] Add Digital Bank\n[2] Add New Expense\n[3] Add New Budget\n[4] Add Category\n[5] View Expenses/Budgets\n[6] View Insights\n[7] Quit");
 
             while (!validChoice){
 
                 System.out.print("Enter your choice: ");
                 choice = sc.nextInt();
 
-                if(choice < 0 && choice > 6){
-                    System.out.println("Error: Please input 1-6 only");
+                if(choice < 0 && choice > 7){
+                    System.out.println("Error: Please input 1-7 only");
                 }
                 else   
                     validChoice = true;
@@ -705,10 +705,69 @@ public class ExpenseTracker {
             }
             
             
-            if(choice == 6){
+            if(choice == 7){
                 quit = true;
             }
 
+            if(choice == 1){
+                Scanner sone = new Scanner(System.in);
+                ArrayList<Bank> banks = user1.getBanks();
+                
+
+                System.out.println();
+                System.out.print("Enter Bank Name: ");
+                String bN = sone.nextLine();
+                System.out.print("Enter Bank Account Number: ");
+                String bAN = sone.nextLine();
+                user1.addBank(bN, bAN);
+
+                System.out.println();
+                System.out.println();
+
+                System.out.println("New Bank Added: "); //just to show bank has been added to User's banks
+                
+                for(Bank curr : banks){
+
+                    if(curr.getBankName().equals(bN) && curr.getBankAccNum().equals(bAN)){
+                        System.out.println(curr.getBankName());
+                        System.out.println(curr.getBankAccNum());
+                    }
+
+                }
+
+                sone.close();
+
+                quit = true;
+            }
+
+            if(choice == 2){
+                
+                quit = true;
+            }
+
+            if(choice == 3){
+
+                quit = true;
+                
+            }
+
+            if(choice == 4){
+
+                quit = true;
+                
+            }
+
+            if(choice == 5){
+
+                quit = true;
+                
+            }
+
+            if(choice == 6){
+
+                quit = true;
+                
+            }
 
 
         }
