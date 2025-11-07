@@ -6,8 +6,8 @@ public class ExpenseTracker {
     ArrayList<Expense> expenses = new ArrayList<>();
     User user;
     ArrayList<String> categories = new ArrayList<>();
-    
-    
+
+
     public Boolean login(String email, String password){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -55,8 +55,8 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenses.add(new Expense(amount, currency, dateTime));
     }
-    
-    */ 
+
+    */
 
     /*public void addBudget(){
         Scanner sca = new Scanner(System.in);
@@ -75,7 +75,7 @@ public class ExpenseTracker {
             startMonth = sca.nextLine();
             if(startMonth)
         }
-        
+
     }*/
 
     public void viewExpensesbyCat(String category){
@@ -99,7 +99,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay().equals(expDate.getDay())){
+                    && date.getDay() == (expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -115,7 +115,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay().equals(expDate.getDay())){
+                    && date.getDay() == (expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -190,7 +190,7 @@ public class ExpenseTracker {
 
     /* MAIN FUNCTION HERE */
 
-    
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -218,7 +218,7 @@ public class ExpenseTracker {
 
         user1.setUserPassword("passwrod");
 
-       
+
 
         sc.close();
     }
