@@ -39,8 +39,15 @@ public class Budget {
     }
 
 
+
     public float getBudgetAmt() {
         return budgetAmt;
+    }
+
+    public float getBudgetAmt(String category) {
+        
+        if(getCategory().equalsIgnoreCase(category)) return budgetAmt;
+        return 0;
     }
 
     public DateTime getBudgetStart() {
@@ -57,17 +64,17 @@ public class Budget {
 
     public String getBudgetSummary(){
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("BudgetID: ").append(" ").append(budgetID);
-        
+
         sb.append(" | Budget Amount: ").append(budgetAmt);
-        
+
         sb.append(" | Start Date (DD-MM-YYYY): ").append(budgetStart.getDay()).append("-").append(budgetStart.getMonth())
                 .append("-").append(budgetStart.getYear());
-        
+
         sb.append(" | End Date: ").append(budgetEnd.getDay()).append("-").append(budgetEnd.getMonth())
                 .append("-").append(budgetEnd.getYear());
-        
+
         if(category != null){
             sb.append(" | Category: ").append(category);
         }
