@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class ExpenseTracker {
-    ArrayList<Budget> budgetTracker;
-    ArrayList<Expense> expenseTracker;
+    ArrayList<Budget> budgets;
+    ArrayList<Expense> expenses;
     User user;
     ArrayList<String> categories;
     
@@ -12,19 +12,19 @@ public class ExpenseTracker {
     }
 
     public void addBudget(float amount, DateTime start, DateTime end, String category){
-        budgetTracker.add(new Budget(amount, start, end, category));
+        budgets.add(new Budget(amount, start, end, category));
     }
 
     public void addBudget(float amount, DateTime start, DateTime end){
-        budgetTracker.add(new Budget(amount, start, end));
+        budgets.add(new Budget(amount, start, end));
     }
 
 
     public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
                               DateTime dateTime, String category){
-        expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
+        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
 
-        for(Budget b: budgetTracker){
+        for(Budget b: budgets){
             //decrease the budget in that category
             if(b.getCategory() != null && b.getCategory().equals(category)){
                 float budget = b.getBudgetAmt();
@@ -36,13 +36,13 @@ public class ExpenseTracker {
 
     public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
                               DateTime dateTime){
-        expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
+        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
     }
 
     public void recordExpense(float amount, String currency, DateTime dateTime, String category){
-        expenseTracker.add(new Expense(amount, currency, dateTime,category));
+        expenses.add(new Expense(amount, currency, dateTime,category));
         //decrease the budget in that category
-        for(Budget b: budgetTracker){
+        for(Budget b: budgets){
             if(b.getCategory() != null && b.getCategory().equals(category)){
                 float budget = b.getBudgetAmt();
                 budget = budget - amount;
@@ -52,13 +52,13 @@ public class ExpenseTracker {
     }
 
     public void recordExpense(float amount, String currency, DateTime dateTime){
-        expenseTracker.add(new Expense(amount, currency, dateTime));
+        expenses.add(new Expense(amount, currency, dateTime));
     }
 
     public void viewExpensesbyCat(String category){
         int counter = 1;
         System.out.println(("EXPENSE ID | AMOUNT | DATE"));
-        for(Expense e: expenseTracker){
+        for(Expense e: expenses){
             if(e.getExpenseCategory().equals(category)){
                 System.out.println(e.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
                         " | " + e.getDate()); // this is not complete idk how to do it paaaa
@@ -72,7 +72,7 @@ public class ExpenseTracker {
         float totalExpense = 0;
         int expenseCount = 0;
 
-        for(Expense exp: expenseTracker){
+        for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
@@ -88,7 +88,7 @@ public class ExpenseTracker {
         float totalExpense = 0;
         int expenseCount = 0;
 
-        for(Expense exp: expenseTracker){
+        for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
@@ -108,7 +108,7 @@ public class ExpenseTracker {
     public float getMonthlyTotalExp(String month, String year){
         float totalExpense = 0;
 
-        for(Expense exp: expenseTracker){
+        for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
             if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
@@ -123,7 +123,7 @@ public class ExpenseTracker {
         float totalExpense = getMonthlyTotalExp(month,year);
         int expenseCount = 0;
 
-        for(Expense exp: expenseTracker){
+        for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
             if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
@@ -141,7 +141,7 @@ public class ExpenseTracker {
     public float getTotalCatExp(String category){
         float total = 0;
 
-        for(Expense e: expenseTracker){
+        for(Expense e: expenses){
             if(e.getExpenseCategory().equals(category)){
                 total = total + e.getExpenseAmount();
             }
@@ -153,7 +153,7 @@ public class ExpenseTracker {
     public float getTotalExpense(){
         float total = 0;
 
-        for(Expense e: expenseTracker){
+        for(Expense e: expenses){
             total = total + e.getExpenseAmount();
         }
 
@@ -193,6 +193,9 @@ public class ExpenseTracker {
         }
 
         user1.setUserPassword("passwrod");
+
+        System.out.println();
+        System.out.println();
 
         
     }
