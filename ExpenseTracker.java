@@ -6,8 +6,8 @@ public class ExpenseTracker {
     ArrayList<Expense> expenses = new ArrayList<>();
     User user;
     ArrayList<String> categories = new ArrayList<>();
-    
-    
+
+
     public Boolean login(String email, String password){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -80,8 +80,8 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenses.add(new Expense(amount, currency, dateTime));
     }
-    
-    */ 
+
+    */
 
     public void addBudget(){
         System.out.println();
@@ -406,17 +406,39 @@ public class ExpenseTracker {
 
     }
 
+   
+
+    public void viewExpenses(){
+
+        System.out.println("EXPENSE SUMMARY");
+
+        for(Expense e: expenses){
+            System.out.println(e.getExpenseSummary());
+        }
+        System.out.println("Total Expenses: " + getTotalExpense());
+    }
 
     public void viewExpensesbyCat(String category){
-        int counter = 1;
-        System.out.println(("EXPENSE ID | AMOUNT | DATE"));
+
+        System.out.println("SHOWING EXPENSES FOR " + category + "CATEGORY");
+
         for(Expense e: expenses){
-            if(e.getExpenseCategory().equals(category)){
-                System.out.println(e.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
-                        " | " + e.getDate()); // this is not complete idk how to do it paaaa
+            String expCat = e.getExpenseCategory();
+
+            if (expCat.equalsIgnoreCase(category)) {
+                System.out.println(e.getExpenseSummary());
+            }
+        }
+
+        System.out.println("Total: " + getTotalCatExp(category));
+
+        for(Budget b: budgets){
+            if(b.getCategory().equalsIgnoreCase(category)){
+                System.out.println("Remaining budget: " + b.getBudgetAmt(category));
             }
         }
     }
+
 
 
 
@@ -428,7 +450,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay().equals(expDate.getDay())){
+                    && date.getDay() == (expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -444,7 +466,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay().equals(expDate.getDay())){
+                    && date.getDay() == (expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -519,7 +541,7 @@ public class ExpenseTracker {
 
     /* MAIN FUNCTION HERE */
 
-    
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -553,6 +575,7 @@ public class ExpenseTracker {
         app.recordExpense(user1);
 
        
+
 
         sc.close();
     }
