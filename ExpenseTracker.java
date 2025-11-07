@@ -687,7 +687,7 @@ public class ExpenseTracker {
                 System.out.print("Enter your choice: ");
                 choice = sc.nextInt();
 
-                if(choice < 0 && choice > 7){
+                if(choice < 0 || choice > 7){
                     System.out.println("Error: Please input 1-7 only");
                 }
                 else
@@ -749,11 +749,11 @@ public class ExpenseTracker {
             }
 
             if(choice == 5){
-                
+
                 int view = 0;
-                
+
                 while(view < 1 || view > 4){
-                    
+
                     System.out.println("[1] View Daily Expense");
                     System.out.println("[2] View Monthly Expense");
                     System.out.println("[3] View by Category");
@@ -761,15 +761,15 @@ public class ExpenseTracker {
                     System.out.println("Select how you wish to view your recorded expenses: ");
                     view = sc.nextInt();
                 }
-                
+
                 if(view == 1){
                     app.viewDailyExpense(new DateTime("2025","10", "1"));
                 }
-                
+
                 else if (view == 2){
                     app.viewMonthlyExpense("10", "2025");
                 }
-                
+
                 else if (view == 3){
                     app.viewExpensesbyCat("GROCERY");
                 }
@@ -782,7 +782,7 @@ public class ExpenseTracker {
             }
 
             if(choice == 6){
-                
+
                 int view6 = 0;
 
                 while(view6 < 1 || view6 > 2){
@@ -792,15 +792,19 @@ public class ExpenseTracker {
                     System.out.println("Select your choice: ");
                     view6 = sc.nextInt();
                 }
-                
+
                 if (view6 == 1){
                     app.viewMonthlyExpense("10", "2025");
                     System.out.println("Daily Average: " + app.getDailyAve("10", "2025"));
                 }
                 else{
-                    System.out.println("You are spending" + app.getCatPercentage("GROCERY") * 100 + " on the GROCERY category");
+                    System.out.println("You spent " + (app.getCatPercentage("GROCERY") * 100) + "% in the GROCERY category");
+                    System.out.println("You spent " + (app.getCatPercentage("TRANSPORTATION") * 100) + "% in the TRANSPORTATION category");
+                    System.out.println("You spent " + (app.getCatPercentage("SUBSCRIPTION") * 100) + "% in the SUBSCRIPTION category");
+                    System.out.println("You spent " + (app.getCatPercentage("SHOPPING") * 100) + "% in the SHOPPING category");
+
                 }
-                
+
                 quit = true;
 
             }
