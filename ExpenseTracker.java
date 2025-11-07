@@ -8,7 +8,7 @@ public class ExpenseTracker {
     ArrayList<String> categories = new ArrayList<>();
 
 
-    public Boolean login(String email, String password){
+    public boolean login(String email, String password, User user){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
 
@@ -345,25 +345,9 @@ public class ExpenseTracker {
             else{
                 if(type == 1){
                     expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
-                    for(Budget b: budgets) {
-                        //decrease the budget in that category
-                        if (b.getCategory().equalsIgnoreCase(category)) {
-                            float budget = b.getBudgetAmt();
-                            budget = budget - amount;
-                            b.setBudgetAmt(budget);
-                        }
-                    }
                 }
                 if(type == 2){
                     expenses.add(new Expense(amount, currency, datetime, category));
-                    for(Budget b: budgets) {
-                        //decrease the budget in that category
-                        if (b.getCategory().equalsIgnoreCase(category)) {
-                            float budget = b.getBudgetAmt();
-                            budget = budget - amount;
-                            b.setBudgetAmt(budget);
-                        }
-                    }
                 }
             }
 
@@ -415,17 +399,83 @@ public class ExpenseTracker {
         }
     }
 
-    public float getTotalBudget(){
+    public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses){
 
-        float total = 0;
+        DateTime bdtS = b.getBudgetStart();
+        DateTime bdtE = b.getBudgetEnd();
+        int budgetStartMonth = Integer.parseInt(bdtS.getMonth());
+        int budgetStartDay = Integer.parseInt(bdtS.getDay());
+        int budgetStartYear = Integer.parseInt(bdtS.getYear());
+        int budgetEndMonth = Integer.parseInt(bdtE.getMonth());
+        int budgetEndDay = Integer.parseInt(bdtE.getDay());
+        int budgetEndYear = Integer.parseInt(bdtE.getYear());
 
-        for(Budget b: budgets){
-            total =+ b.getBudgetAmt();
-        }
+        float remainingBudget = b.getBudgetAmt();
 
-        return total;
+        for(Expense curr : expenses){
+
+            DateTime dt = curr.getExpenseDateTime();
+
+            //check if expense is less than or equal to budget end date
+            if((Integer.parseInt(dt.getMonth()) <= budgetEndMonth) && (Integer.parseInt(dt.getDay()) <= budgetEndDay) && (Integer.parseInt(dt.getYear()) <= budgetEndYear)){
+
+                //check if expense is greater than or equal to budget start date
+                if((Integer.parseInt(dt.getMonth()) >= budgetStartMonth) && (Integer.parseInt(dt.getDay()) >= budgetStartDay) && (Integer.parseInt(dt.getYear()) >= budgetStartYear)){
+
+                    remainingBudget = (remainingBudget - curr.getExpenseAmount());
+
+                }
+
+            }
+
+        }  
+
+        return remainingBudget;
+
     }
 
+
+    public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses, boolean underCategory){
+
+        DateTime bdtS = b.getBudgetStart();
+        DateTime bdtE = b.getBudgetEnd();
+
+        String budCat = b.getCategory();
+
+        int budgetStartMonth = Integer.parseInt(bdtS.getMonth());
+        int budgetStartDay = Integer.parseInt(bdtS.getDay());
+        int budgetStartYear = Integer.parseInt(bdtS.getYear());
+        int budgetEndMonth = Integer.parseInt(bdtE.getMonth());
+        int budgetEndDay = Integer.parseInt(bdtE.getDay());
+        int budgetEndYear = Integer.parseInt(bdtE.getYear());
+
+        float remainingBudget = b.getBudgetAmt();
+
+        for(Expense curr : expenses){
+
+            DateTime dt = curr.getExpenseDateTime();
+            String currCat = curr.getExpenseCategory();
+
+            //check if expense is less than or equal to budget end date
+            if((Integer.parseInt(dt.getMonth()) <= budgetEndMonth) && (Integer.parseInt(dt.getDay()) <= budgetEndDay) && (Integer.parseInt(dt.getYear()) <= budgetEndYear)){
+
+                //check if expense is greater than or equal to budget start date
+                if((Integer.parseInt(dt.getMonth()) >= budgetStartMonth) && (Integer.parseInt(dt.getDay()) >= budgetStartDay) && (Integer.parseInt(dt.getYear()) >= budgetStartYear)){
+
+                    //check if budget 
+                    if(currCat.equalsIgnoreCase(budCat)){
+                        remainingBudget = (remainingBudget - curr.getExpenseAmount());
+                    }
+
+                }
+
+            }
+
+        }  
+
+        return remainingBudget;
+
+    }
 
     public void viewDailyExpense(DateTime date){
         System.out.println("Expenses for:" + date.getDay() + '-' + date.getMonth() + "-" + date.getYear());
@@ -556,12 +606,13 @@ public class ExpenseTracker {
 
         Scanner sc = new Scanner(System.in);
         ExpenseTracker app = new ExpenseTracker();
+
+         
+
+        User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
+        user1.setUserPassword("passwrod");
+
         String currency = "PHP";
-
-        /*=============EXPENSES=================*/
-
-
-        // Fixed bank account numbers per bank
         String gcashAcc = "BA10001";
         String bpiAcc = "BA20001";
         String mayaAcc = "BA30001";
@@ -606,11 +657,30 @@ public class ExpenseTracker {
         app.expenses.add(new Expense(600, currency, new DateTime("2025", "October", "12"), "GROCERY"));
         app.expenses.add(new Expense(199, currency, new DateTime("2025", "October", "28"), "SUBSCRIPTION"));
 
+        boolean quit = false;
+        boolean success = false; //for login
 
+        System.out.println("PERSONAL EXPENSES TRACKER");
+        System.out.println();
 
+        while(!success){
+            System.out.print("Enter your email: ");
+            String em = sc.nextLine();
+            System.out.print("Enter your password: ");
+            String pw = sc.nextLine();
 
+            success = app.login(em, pw, user1);
 
+            if(!success){
+                System.out.println("Error: email and password do not match or are incorrect!");
+            }
+            
+        }
 
+        if(success){
+            System.out.println("Login Successful!");
+            System.out.println("Welcome, " + user1.getUserFirstName() + " " + user1.getUserMidName().charAt(0) + ". " + user1.getUserSurname());
+        }
 
 
 
