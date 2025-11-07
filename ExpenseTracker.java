@@ -657,7 +657,7 @@ public class ExpenseTracker {
         app.expenses.add(new Expense(600, currency, new DateTime("2025", "October", "12"), "GROCERY"));
         app.expenses.add(new Expense(199, currency, new DateTime("2025", "October", "28"), "SUBSCRIPTION"));
 
-        boolean quit = false;
+        boolean quit = false; //for program
         boolean success = false; //for login
 
         System.out.println("PERSONAL EXPENSES TRACKER");
@@ -680,9 +680,43 @@ public class ExpenseTracker {
         if(success){
             System.out.println("Login Successful!");
             System.out.println("Welcome, " + user1.getUserFirstName() + " " + user1.getUserMidName().charAt(0) + ". " + user1.getUserSurname());
+            System.out.println();
         }
 
 
+        if(!quit){
+
+            int choice = 0;
+            boolean validChoice = false;
+
+            System.out.println("[1] Add Digital Bank\n[2] Add New Expense\n[3] Add New Budget\n[4] Add Category\n[5] View Expenses/Budgets\n[6] Quit");
+
+            while (!validChoice){
+
+                System.out.print("Enter your choice: ");
+                choice = sc.nextInt();
+
+                if(choice < 0 && choice > 6){
+                    System.out.println("Error: Please input 1-6 only");
+                }
+                else   
+                    validChoice = true;
+
+            }
+            
+            
+            if(choice == 6){
+                quit = true;
+            }
+
+
+
+        }
+
+        if(quit){
+            System.out.println();
+            System.out.println("Logged Out");
+        }
 
 
         sc.close();
