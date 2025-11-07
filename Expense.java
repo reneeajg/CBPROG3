@@ -58,10 +58,6 @@ public class Expense {
         this.expenseDateTime = dateTime;
     }
 
-    public DateTime getDate(){
-        return expenseDateTime;
-    }
-
     public float getExpenseAmount() {
         return expenseAmount;
     }
@@ -89,10 +85,10 @@ public class Expense {
     // this is how we can avoid printing null values
     public String getExpenseSummary() {
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("ExpenseID: ").append(expenseID);
 
-        sb.append(" | Amount: ").append(expenseAmount).append(" ").append(expenseCurrency).append(" | Date: ")
+        sb.append(" | Amount: ").append(expenseAmount).append(" ").append(expenseCurrency).append(" | Date (DD-MM-YYYY): ")
                 .append(expenseDateTime.getDay())
                 .append("-").append(expenseDateTime.getMonth())
                 .append("-").append(expenseDateTime.getYear());
