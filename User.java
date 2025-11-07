@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.lang.System.*;
 
 public class User {
 

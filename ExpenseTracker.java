@@ -4,7 +4,7 @@ public class ExpenseTracker {
     ArrayList<Budget> budgetTracker;
     ArrayList<Expense> expenseTracker;
     User user;
-    ArrayList<Category> categories;
+    ArrayList<String> categories;
     
     
     public Boolean login(String email, String password){
