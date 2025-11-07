@@ -352,7 +352,7 @@ public class ExpenseTracker {
                             budget = budget - amount;
                             b.setBudgetAmt(budget);
                         }
-                    }    
+                    }
                 }
                 if(type == 2){
                     expenses.add(new Expense(amount, currency, datetime, category));
@@ -427,9 +427,20 @@ public class ExpenseTracker {
     }
 
 
+    public void viewDailyExpense(DateTime date){
+        System.out.println("Expenses for:" + date.getDay() + '-' + date.getMonth() + "-" + date.getYear());
+        for(Expense exp: expenses){
+            DateTime expDate = exp.getExpenseDateTime();
 
+            if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
+                    && date.getDay().equals(expDate.getDay())){
+                System.out.println(exp.getExpenseSummary());
+            }
+        }
+    }
 
     public float getDailyTotalExp(DateTime date){
+        viewDailyExpense(date);
         float totalExpense = 0;
         int expenseCount = 0;
 
@@ -465,10 +476,22 @@ public class ExpenseTracker {
 
         return totalExpense / expenseCount;
     }
+    
+    public void viewMonthlyExpense(String month, String year){
+        System.out.println("Showing expenses for: " + month + " " + year);
+        
+        for(Expense exp: expenses){
+            DateTime expDate = exp.getExpenseDateTime();
+
+            if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
+                System.out.println(exp.getExpenseSummary());
+            }
+        }
+    }
 
     public float getMonthlyTotalExp(String month, String year){
         float totalExpense = 0;
-
+        viewMonthlyExpense(month,year);
         for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
@@ -533,33 +556,61 @@ public class ExpenseTracker {
 
         Scanner sc = new Scanner(System.in);
         ExpenseTracker app = new ExpenseTracker();
+        String currency = "PHP";
 
-        User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
-        user1.setUserPassword("passwrod");
-
-        System.out.println(user1.getUserID());
-        System.out.println(user1.getUserEmail());
-        System.out.println(user1.getUserFirstName());
-        System.out.println(user1.getUserMidName());
-        System.out.println(user1.getUserSurname());
-        System.out.println(user1.getUserPassword());
-
-        user1.addBank("GCash", "09171234567");
-        user1.addBank("BDO", "001234567891");
+        /*=============EXPENSES=================*/
 
 
-        ArrayList<Bank> banks = user1.getBanks();
-        for(Bank b: banks){
-            System.out.print(b.getBankName());
-            System.out.print(" ");
-            System.out.print(b.getBankAccNum());
-            System.out.println();
-        }
+        // Fixed bank account numbers per bank
+        String gcashAcc = "BA10001";
+        String bpiAcc = "BA20001";
+        String mayaAcc = "BA30001";
 
-        user1.setUserPassword("passwrod");
+        // Populate with hardcoded expenses for October 2025
 
-        //app.addBudget();
-        app.recordExpense(user1);
+        // GROCERY - mostly via GCash
+        app.expenses.add(new Expense("GCASH", gcashAcc, 1200, currency, "REF1001", "ACC5001",
+                new DateTime("2025", "October", "1"), "GROCERY"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 850, currency, "REF1002", "ACC5002",
+                new DateTime("2025", "October", "8"), "GROCERY"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 950, currency, "REF1003", "ACC5003",
+                new DateTime("2025", "October", "15"), "GROCERY"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 1100, currency, "REF1004", "ACC5004",
+                new DateTime("2025", "October", "22"), "GROCERY"));
+
+        // UTILITY - through BPI
+        app.expenses.add(new Expense("BPI", bpiAcc, 2300, currency, "REF2001", "ACC6001",
+                new DateTime("2025", "October", "5"), "UTILITY"));
+        app.expenses.add(new Expense("BPI", bpiAcc, 1850, currency, "REF2002", "ACC6002",
+                new DateTime("2025", "October", "20"), "UTILITY"));
+
+        // SUBSCRIPTION - via PAYMAYA
+        app.expenses.add(new Expense("PAYMAYA", mayaAcc, 499, currency, "REF3001", "ACC7001",
+                new DateTime("2025", "October", "3"), "SUBSCRIPTION"));
+        app.expenses.add(new Expense("PAYMAYA", mayaAcc, 249, currency, "REF3002", "ACC7002",
+                new DateTime("2025", "October", "17"), "SUBSCRIPTION"));
+        app.expenses.add(new Expense("PAYMAYA", mayaAcc, 149, currency, "REF3003", "ACC7003",
+                new DateTime("2025", "October", "31"), "SUBSCRIPTION"));
+
+        // TRANSPORTATION - mixed banks
+        app.expenses.add(new Expense("GCASH", gcashAcc, 300, currency, "REF4001", "ACC8001",
+                new DateTime("2025", "October", "2"), "TRANSPORTATION"));
+        app.expenses.add(new Expense("BPI", bpiAcc, 450, currency, "REF4002", "ACC8002",
+                new DateTime("2025", "October", "10"), "TRANSPORTATION"));
+        app.expenses.add(new Expense("PAYMAYA", mayaAcc, 275, currency, "REF4003", "ACC8003",
+                new DateTime("2025", "October", "18"), "TRANSPORTATION"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 390, currency, "REF4004", "ACC8004",
+                new DateTime("2025", "October", "25"), "TRANSPORTATION"));
+
+        // Some simple overloads (no bank info)
+        app.expenses.add(new Expense(600, currency, new DateTime("2025", "October", "12"), "GROCERY"));
+        app.expenses.add(new Expense(199, currency, new DateTime("2025", "October", "28"), "SUBSCRIPTION"));
+
+
+
+
+
+
 
 
 
