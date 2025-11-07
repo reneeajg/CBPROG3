@@ -428,7 +428,7 @@ public class ExpenseTracker {
 
             }
 
-        }  
+        }
 
         return remainingBudget;
 
@@ -462,7 +462,7 @@ public class ExpenseTracker {
                 //check if expense is greater than or equal to budget start date
                 if((Integer.parseInt(dt.getMonth()) >= budgetStartMonth) && (Integer.parseInt(dt.getDay()) >= budgetStartDay) && (Integer.parseInt(dt.getYear()) >= budgetStartYear)){
 
-                    //check if budget 
+                    //check if budget
                     if(currCat.equalsIgnoreCase(budCat)){
                         remainingBudget = (remainingBudget - curr.getExpenseAmount());
                     }
@@ -471,7 +471,7 @@ public class ExpenseTracker {
 
             }
 
-        }  
+        }
 
         return remainingBudget;
 
@@ -506,16 +506,14 @@ public class ExpenseTracker {
         return totalExpense;
     }
 
-    public float computeDailyAve(DateTime date){
-        float totalExpense = 0;
+    public float getDailyAve(String month, String year){
+        float totalExpense = getMonthlyTotalExp(month,year);
         int expenseCount = 0;
 
         for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
-            if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay().equals(expDate.getDay())){
-                totalExpense = totalExpense + exp.getExpenseAmount();
+            if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
                 expenseCount++;
             }
         }
@@ -526,10 +524,10 @@ public class ExpenseTracker {
 
         return totalExpense / expenseCount;
     }
-    
+
     public void viewMonthlyExpense(String month, String year){
         System.out.println("Showing expenses for: " + month + " " + year);
-        
+
         for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
@@ -553,24 +551,7 @@ public class ExpenseTracker {
         return totalExpense;
     }
 
-    public float getMonthlyAve(String month, String year){
-        float totalExpense = getMonthlyTotalExp(month,year);
-        int expenseCount = 0;
 
-        for(Expense exp: expenses){
-            DateTime expDate = exp.getExpenseDateTime();
-
-            if(expDate.getMonth().equals(month) && expDate.getYear().equals(year)){
-                expenseCount++;
-            }
-        }
-
-        if(expenseCount == 0){
-            return 0;
-        }
-
-        return totalExpense / expenseCount;
-    }
 
     public float getTotalCatExp(String category){
         float total = 0;
@@ -607,7 +588,7 @@ public class ExpenseTracker {
         Scanner sc = new Scanner(System.in);
         ExpenseTracker app = new ExpenseTracker();
 
-         
+
 
         User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
         user1.setUserPassword("passwrod");
@@ -674,7 +655,7 @@ public class ExpenseTracker {
             if(!success){
                 System.out.println("Error: email and password do not match or are incorrect!");
             }
-            
+
         }
 
         if(success){
@@ -699,7 +680,7 @@ public class ExpenseTracker {
                 if(choice < 0 && choice > 7){
                     System.out.println("Error: Please input 1-7 only");
                 }
-                else   
+                else
                     validChoice = true;
 
             }
