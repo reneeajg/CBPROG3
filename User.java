@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    private String userID, userEmail, firstName, midName, Surname, password;
+    private String userID, userEmail, firstName, midName, Surname, password, defaultCurrency;
     private ArrayList<Bank> userBanks = new ArrayList<>();
 
     public User(String email, String fName, String mName, String sName){
@@ -38,8 +38,23 @@ public class User {
         return userEmail;
     }
 
-    public void setUserEmail(String email){
-        this.userEmail = email;
+    public boolean setUserEmail(String email){
+        if(userEmail == null){
+            this.userEmail = email;
+            return true;
+        }
+        else{
+
+            if(userEmail.equals(email)){
+                System.out.println("Error: New email is same as old email!");
+                return false;
+            }
+            else {
+                this.userEmail = email;
+                return true;
+            }
+
+        } 
     }
 
     public String getUserPassword(){
@@ -73,5 +88,12 @@ public class User {
         return userBanks;
     }
 
+    public void setDefaultCurrency(String c){
+        this.defaultCurrency = c;
+    }
+
+    public String getDefaultCurrency(){
+        return defaultCurrency;
+    }
 
 }

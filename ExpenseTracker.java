@@ -1,17 +1,18 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ExpenseTracker {
     ArrayList<Budget> budgets;
-    ArrayList<Expense> expenses;
+    ArrayList<Expense> expenses = new ArrayList<>();
     User user;
-    ArrayList<String> categories;
+    ArrayList<String> categories = new ArrayList<>();
     
     
     public Boolean login(String email, String password){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
 
-    public void addBudget(float amount, DateTime start, DateTime end, String category){
+   /* public void addBudget(float amount, DateTime start, DateTime end, String category){
         budgets.add(new Budget(amount, start, end, category));
     }
 
@@ -54,6 +55,28 @@ public class ExpenseTracker {
     public void recordExpense(float amount, String currency, DateTime dateTime){
         expenses.add(new Expense(amount, currency, dateTime));
     }
+    
+    */ 
+
+    /*public void addBudget(){
+        Scanner sca = new Scanner(System.in);
+        float amount;
+        String startMonth, startDay, startYear, endMonth, endDay, endYear;
+        DateTime start;
+        DateTime end;
+        boolean validNum = true;
+
+        System.out.println("Enter Budget Amount: ");
+        amount = sca.nextFloat();
+        //sca.nextLine();
+
+        while(!validNum){
+            System.out.println("Enter Budget Start Month: ");
+            startMonth = sca.nextLine();
+            if(startMonth)
+        }
+        
+    }*/
 
     public void viewExpensesbyCat(String category){
         int counter = 1;
@@ -170,6 +193,7 @@ public class ExpenseTracker {
     
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
         User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
         user1.setUserPassword("passwrod");
 
@@ -194,10 +218,9 @@ public class ExpenseTracker {
 
         user1.setUserPassword("passwrod");
 
-        System.out.println();
-        System.out.println();
+       
 
-        
+        sc.close();
     }
 
 
