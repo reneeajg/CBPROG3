@@ -8,7 +8,7 @@ public class Expense {
     private float expenseAmount;
     private String expenseCurrency, expenseRefNum, expenseReceiverAccNo;
     private DateTime expenseDateTime;
-    private Category expenseCategory;
+    private String expenseCategory;
     private Bank expenseBank;
 
     private void createExpID(){
@@ -16,8 +16,12 @@ public class Expense {
         this.expenseID = EXPENSE_CODE + String.format("%03d", expCounter);
     }
 
+    public String getExpenseID(){
+        return expenseID;
+    }
+
     public Expense (String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
-                    DateTime dateTime, Category category){
+                    DateTime dateTime, String category){
         createExpID();
         this.expenseBank = new Bank(bankName, bankAccNum);
         this.expenseAmount = amount;
@@ -37,7 +41,7 @@ public class Expense {
         this.expenseDateTime = dateTime;
     }
 
-    public Expense (float amount, String currency, DateTime dateTime, Category category){
+    public Expense (float amount, String currency, DateTime dateTime, String category){
 
         createExpID();
         this.expenseAmount = amount;
@@ -70,7 +74,7 @@ public class Expense {
         return expenseRefNum;
     }
 
-    public Category getExpenseCategory() {
+    public String getExpenseCategory() {
         return expenseCategory;
     }
 
@@ -94,7 +98,7 @@ public class Expense {
                 .append("-").append(expenseDateTime.getYear());
 
         if (expenseCategory != null)
-            sb.append(" | Category: ").append(expenseCategory.getCategoryName());
+            sb.append(" | Category: ").append(expenseCategory);
 
         if (expenseBank != null) {
             sb.append(" | Bank: ").append(expenseBank.getBankName());

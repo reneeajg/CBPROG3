@@ -8,14 +8,18 @@ public class Budget {
     private String budgetID;
     private float budgetAmt;
     private DateTime budgetStart, budgetEnd;
-    private Category category;
+    private String category;
 
     private void createBudID(){
         bCounter++;
         this.budgetID = BUDGET_CODE + String.format("%03d", bCounter);
     }
 
-    public Budget(float amount, DateTime start, DateTime end, Category category){
+    public String getBudID(){
+        return budgetID;
+    }
+
+    public Budget(float amount, DateTime start, DateTime end, String category){
         createBudID();
         this.budgetAmt = amount;
         this.budgetStart = start;
@@ -47,7 +51,7 @@ public class Budget {
         return budgetEnd;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 }

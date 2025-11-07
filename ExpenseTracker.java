@@ -11,7 +11,7 @@ public class ExpenseTracker {
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
 
-    public void addBudget(float amount, DateTime start, DateTime end, Category category){
+    public void addBudget(float amount, DateTime start, DateTime end, String category){
         budgetTracker.add(new Budget(amount, start, end, category));
     }
 
@@ -21,12 +21,12 @@ public class ExpenseTracker {
 
 
     public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
-                              DateTime dateTime, Category category){
+                              DateTime dateTime, String category){
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
 
         for(Budget b: budgetTracker){
             //decrease the budget in that category
-            if(b.getCategory() != null && b.getCategory().getCategoryName().equals(category.getCategoryName())){
+            if(b.getCategory() != null && b.getCategory().equals(category)){
                 float budget = b.getBudgetAmt();
                 budget = budget - amount;
                 b.setBudgetAmt(budget);
@@ -39,11 +39,11 @@ public class ExpenseTracker {
         expenseTracker.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
     }
 
-    public void recordExpense(float amount, String currency, DateTime dateTime, Category category){
+    public void recordExpense(float amount, String currency, DateTime dateTime, String category){
         expenseTracker.add(new Expense(amount, currency, dateTime,category));
         //decrease the budget in that category
         for(Budget b: budgetTracker){
-            if(b.getCategory() != null && b.getCategory().getCategoryName().equals(category.getCategoryName())){
+            if(b.getCategory() != null && b.getCategory().equals(category)){
                 float budget = b.getBudgetAmt();
                 budget = budget - amount;
                 b.setBudgetAmt(budget);
@@ -55,13 +55,12 @@ public class ExpenseTracker {
         expenseTracker.add(new Expense(amount, currency, dateTime));
     }
 
-    public void viewExpensesbyCat(Category category){
-        String cat = category.getCategoryName();
+    public void viewExpensesbyCat(String category){
         int counter = 1;
         System.out.println(("EXPENSE ID | AMOUNT | DATE"));
         for(Expense e: expenseTracker){
-            if(e.getExpenseCategory().getCategoryName().equals(cat)){
-                System.out.println(Expense.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
+            if(e.getExpenseCategory().equals(category)){
+                System.out.println(e.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
                         " | " + e.getDate()); // this is not complete idk how to do it paaaa
             }
         }
@@ -139,12 +138,11 @@ public class ExpenseTracker {
         return totalExpense / expenseCount;
     }
 
-    public float getTotalCatExp(Category category){
+    public float getTotalCatExp(String category){
         float total = 0;
-        String cat = category.getCategoryName();
 
         for(Expense e: expenseTracker){
-            if(e.getExpenseCategory().getCategoryName().equals(cat)){
+            if(e.getExpenseCategory().equals(category)){
                 total = total + e.getExpenseAmount();
             }
         }
@@ -162,9 +160,41 @@ public class ExpenseTracker {
         return total;
     }
 
-    public float getCatPercentage(Category category){
+    public float getCatPercentage(String category){
         return getTotalCatExp(category)/getTotalExpense();
 
+    }
+
+    /* MAIN FUNCTION HERE */
+
+    
+    public static void main(String[] args) {
+
+        User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
+        user1.setUserPassword("passwrod");
+
+        System.out.println(user1.getUserID());
+        System.out.println(user1.getUserEmail());
+        System.out.println(user1.getUserFirstName());
+        System.out.println(user1.getUserMidName());
+        System.out.println(user1.getUserSurname());
+        System.out.println(user1.getUserPassword());
+
+        user1.addBank("GCash", "09171234567");
+        user1.addBank("BDO", "001234567891");
+
+
+        ArrayList<Bank> banks = user1.getBanks();
+        for(Bank b: banks){
+            System.out.print(b.getBankName());
+            System.out.print(" ");
+            System.out.print(b.getBankAccNum());
+            System.out.println();
+        }
+
+        user1.setUserPassword("passwrod");
+
+        
     }
 
 
