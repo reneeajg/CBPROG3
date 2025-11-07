@@ -593,50 +593,61 @@ public class ExpenseTracker {
         User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
         user1.setUserPassword("passwrod");
 
-        String currency = "PHP";
+        /*=============EXPENSES=================*/
+
+
+        // Fixed bank account numbers per bank
         String gcashAcc = "BA10001";
         String bpiAcc = "BA20001";
         String mayaAcc = "BA30001";
+        String currency = "PHP";
 
-        // Populate with hardcoded expenses for October 2025
-
-        // GROCERY - mostly via GCash
         app.expenses.add(new Expense("GCASH", gcashAcc, 1200, currency, "REF1001", "ACC5001",
-                new DateTime("2025", "October", "1"), "GROCERY"));
+                new DateTime("2025", "10", "1"), "GROCERY"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 3500, currency, "REF1001", "ACC5001",
+                new DateTime("2025", "10", "1"), "SHOPPING"));
+        app.expenses.add(new Expense("GCASH", gcashAcc, 2000, currency, "REF1001", "ACC5001",
+                new DateTime("2025", "10", "8"), "SHOPPING"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 850, currency, "REF1002", "ACC5002",
-                new DateTime("2025", "October", "8"), "GROCERY"));
+                new DateTime("2025", "10", "8"), "GROCERY"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 950, currency, "REF1003", "ACC5003",
-                new DateTime("2025", "October", "15"), "GROCERY"));
+                new DateTime("2025", "10", "15"), "GROCERY"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 1100, currency, "REF1004", "ACC5004",
-                new DateTime("2025", "October", "22"), "GROCERY"));
-
-        // UTILITY - through BPI
+                new DateTime("2025", "10", "22"), "GROCERY"));
         app.expenses.add(new Expense("BPI", bpiAcc, 2300, currency, "REF2001", "ACC6001",
-                new DateTime("2025", "October", "5"), "UTILITY"));
+                new DateTime("2025", "10", "5"), "UTILITY"));
         app.expenses.add(new Expense("BPI", bpiAcc, 1850, currency, "REF2002", "ACC6002",
-                new DateTime("2025", "October", "20"), "UTILITY"));
-
-        // SUBSCRIPTION - via PAYMAYA
+                new DateTime("2025", "10", "20"), "UTILITY"));
         app.expenses.add(new Expense("PAYMAYA", mayaAcc, 499, currency, "REF3001", "ACC7001",
-                new DateTime("2025", "October", "3"), "SUBSCRIPTION"));
+                new DateTime("2025", "10", "3"), "SHOPPING"));
         app.expenses.add(new Expense("PAYMAYA", mayaAcc, 249, currency, "REF3002", "ACC7002",
-                new DateTime("2025", "October", "17"), "SUBSCRIPTION"));
+                new DateTime("2025", "10", "15"), "SUBSCRIPTION"));
         app.expenses.add(new Expense("PAYMAYA", mayaAcc, 149, currency, "REF3003", "ACC7003",
-                new DateTime("2025", "October", "31"), "SUBSCRIPTION"));
-
-        // TRANSPORTATION - mixed banks
+                new DateTime("2025", "10", "31"), "SUBSCRIPTION"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 300, currency, "REF4001", "ACC8001",
-                new DateTime("2025", "October", "2"), "TRANSPORTATION"));
+                new DateTime("2025", "10", "2"), "TRANSPORTATION"));
         app.expenses.add(new Expense("BPI", bpiAcc, 450, currency, "REF4002", "ACC8002",
-                new DateTime("2025", "October", "10"), "TRANSPORTATION"));
+                new DateTime("2025", "10", "15"), "SHOPPING"));
         app.expenses.add(new Expense("PAYMAYA", mayaAcc, 275, currency, "REF4003", "ACC8003",
-                new DateTime("2025", "October", "18"), "TRANSPORTATION"));
+                new DateTime("2025", "10", "15"), "TRANSPORTATION"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 390, currency, "REF4004", "ACC8004",
-                new DateTime("2025", "October", "25"), "TRANSPORTATION"));
+                new DateTime("2025", "10", "25"), "TRANSPORTATION"));
+        //overloads
+        app.expenses.add(new Expense(249, currency, new DateTime("2025","10","15")));
+        app.expenses.add(new Expense(150, currency, new DateTime("2025","10","10")));
+        app.expenses.add(new Expense(100, currency, new DateTime("2025","10","3")));
+        app.expenses.add(new Expense(30, currency, new DateTime("2025","10","29")));
+        app.expenses.add(new Expense(600, currency, new DateTime("2025", "10", "12"), "GROCERY"));
+        app.expenses.add(new Expense(199, currency, new DateTime("2025", "10", "28"), "SUBSCRIPTION"));
 
-        // Some simple overloads (no bank info)
-        app.expenses.add(new Expense(600, currency, new DateTime("2025", "October", "12"), "GROCERY"));
-        app.expenses.add(new Expense(199, currency, new DateTime("2025", "October", "28"), "SUBSCRIPTION"));
+        DateTime start = new DateTime("2025", "10", "1");
+        DateTime end = new DateTime("2025", "10", "31");
+        /*=============BUDGET=================*/
+        app.budgets.add(new Budget(20000, start, end, "GROCERY"));
+        app.budgets.add(new Budget(5000, start, end, "TRANSPORTATION"));
+        app.budgets.add(new Budget(3000, start, end, "SUBSCRIPTION"));
+        app.budgets.add(new Budget(10000, start, end, "SHOPPING"));
+        app.budgets.add(new Budget(30000, start, end));
 
         boolean quit = false; //for program
         boolean success = false; //for login
@@ -684,8 +695,8 @@ public class ExpenseTracker {
                     validChoice = true;
 
             }
-            
-            
+
+
             if(choice == 7){
                 quit = true;
             }
@@ -693,7 +704,7 @@ public class ExpenseTracker {
             if(choice == 1){
                 Scanner sone = new Scanner(System.in);
                 ArrayList<Bank> banks = user1.getBanks();
-                
+
 
                 System.out.println();
                 System.out.print("Enter Bank Name: ");
@@ -706,7 +717,7 @@ public class ExpenseTracker {
                 System.out.println();
 
                 System.out.println("New Bank Added: "); //just to show bank has been added to User's banks
-                
+
                 for(Bank curr : banks){
 
                     if(curr.getBankName().equals(bN) && curr.getBankAccNum().equals(bAN)){
@@ -722,32 +733,32 @@ public class ExpenseTracker {
             }
 
             if(choice == 2){
-                
+
                 quit = true;
             }
 
             if(choice == 3){
 
                 quit = true;
-                
+
             }
 
             if(choice == 4){
 
                 quit = true;
-                
+
             }
 
             if(choice == 5){
 
                 quit = true;
-                
+
             }
 
             if(choice == 6){
 
                 quit = true;
-                
+
             }
 
 
