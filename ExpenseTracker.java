@@ -35,6 +35,15 @@ public class ExpenseTracker {
         }
     }
 
+       public void displayAllBudgets(){
+        System.out.println();
+        System.out.println("BUDGET AMOUNT | BUDGET START DATE | BUDGET END DATE | BUDGET CATEGORY");
+        for(int i = 0; i < budgets.size(); i++){
+            System.out.print((i+1)  + ". ");
+            System.out.print(budgets.get(i).getBudgetAmt() + " " + budgets.get(i).getBudgetStart().getDay() + "-" + budgets.get(i).getBudgetStart().getMonth() + "-" +  budgets.get(i).getBudgetStart().getYear() + " " + budgets.get(i).getCategory());
+        }
+    }
+
     public String getCategoryIndex(int i){
         return categories.get(i-1);
     }
@@ -850,3 +859,4 @@ public class ExpenseTracker {
 
 
 }
+
