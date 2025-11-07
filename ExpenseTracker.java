@@ -12,7 +12,7 @@ public class ExpenseTracker {
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
 
-   
+
     public void addCategory(String c){
         categories.add(c);
     }
@@ -115,7 +115,7 @@ public class ExpenseTracker {
         }
 
         validNum = false;
-        
+
         while(!validNum){
             System.out.print("Enter Budget Start Day: ");
             startDay = sca.nextLine();
@@ -144,7 +144,7 @@ public class ExpenseTracker {
 
         /* BUDGET END DATE */
 
-         while(!validNum){
+        while(!validNum){
             System.out.print("Enter Budget End Month: ");
             endMonth = sca.nextLine();
             int eMonth = Integer.parseInt(endMonth);
@@ -156,7 +156,7 @@ public class ExpenseTracker {
             }
         }
         validNum = false;
-        
+
         while(!validNum){
             System.out.print("Enter Budget End Day: ");
             endDay = sca.nextLine();
@@ -196,7 +196,7 @@ public class ExpenseTracker {
                 addCategory(category);
                 budgets.add(new Budget(amount, start, end, category));
             }
-            else    
+            else
                 budgets.add(new Budget(amount, start, end, category));
         }
 
@@ -206,16 +206,16 @@ public class ExpenseTracker {
         System.out.println("New Budget added!");
     }
 
-    
+
     public void recordExpense(User user){
         Scanner sca = new Scanner(System.in);
         boolean validNum = false;
         int type=0; //for expense type
-        int bankChoice=0; 
+        int bankChoice=0;
 
         String bankName = "NONE";
         String bankAccNum = "NONE";
-        float amount = 0; 
+        float amount = 0;
         String currency = user.getDefaultCurrency();
         String refNum = "NONE";
         String receiverAccNo  = "NONE";
@@ -228,8 +228,8 @@ public class ExpenseTracker {
         System.out.println();
         System.out.println("[1] Digital Expense\n[2] Physical Expense");
         ;
-        
-        
+
+
         while(!validNum){
             System.out.print("Enter number of choice: ");
             type = sca.nextInt();
@@ -248,7 +248,7 @@ public class ExpenseTracker {
                 System.out.print("[" + (i+1) + "] ");
                 System.out.println(user.getBanks().get(i).getBankName());
             }
-            
+
 
             while(!validNum){
                 System.out.print("Enter number of choice: ");
@@ -261,7 +261,7 @@ public class ExpenseTracker {
                 }
             }
             validNum = false;
-            
+
             System.out.print("Enter Expense amount: ");
             amount = sca.nextFloat();
 
@@ -323,19 +323,19 @@ public class ExpenseTracker {
             sca.nextLine();
 
             while(!validNum){
-            System.out.print("Enter Month of Expense: ");
-            expMonth = sca.nextLine();
-            int eMonth = Integer.parseInt(expMonth);
-            if(eMonth > 0 && eMonth < 13){
-                validNum = true;
+                System.out.print("Enter Month of Expense: ");
+                expMonth = sca.nextLine();
+                int eMonth = Integer.parseInt(expMonth);
+                if(eMonth > 0 && eMonth < 13){
+                    validNum = true;
+                }
+                else{
+                    System.out.print("Error: Please input a month between 1-12");
+                    System.out.println();
+                }
             }
-            else{
-                System.out.print("Error: Please input a month between 1-12");
-                System.out.println();
-            }
-        }
             validNum = false;
-            
+
             while(!validNum){
                 System.out.print("Enter Day of Expense: ");
                 expDay = sca.nextLine();
@@ -362,42 +362,42 @@ public class ExpenseTracker {
                     System.out.println();
                 }
             }
-                
-            }
 
-            System.out.print("Enter a category (Input 'NONE' to not apply a category): ");
-            category = sca.nextLine();
-            if(category.equalsIgnoreCase("NONE")){
-                datetime = new DateTime(expYear, expMonth, expDay);
+        }
 
-                if(type == 1)
-                    expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime));
-                if(type == 2)
-                    expenses.add(new Expense(amount, currency, datetime));
-            }
-            else {
-                datetime = new DateTime(expYear, expMonth, expDay);
+        System.out.print("Enter a category (Input 'NONE' to not apply a category): ");
+        category = sca.nextLine();
+        if(category.equalsIgnoreCase("NONE")){
+            datetime = new DateTime(expYear, expMonth, expDay);
 
-                if(isCategoryUnique(category)){
-                    addCategory(category);
-                    if(type == 1){
-                        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
-                    }
-                    if(type == 2){
-                        expenses.add(new Expense(amount, currency, datetime, category));
-                    }
-                    
+            if(type == 1)
+                expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime));
+            if(type == 2)
+                expenses.add(new Expense(amount, currency, datetime));
+        }
+        else {
+            datetime = new DateTime(expYear, expMonth, expDay);
+
+            if(isCategoryUnique(category)){
+                addCategory(category);
+                if(type == 1){
+                    expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
                 }
-                else{
-                    if(type == 1){
-                        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
-                    }
-                    if(type == 2){
-                        expenses.add(new Expense(amount, currency, datetime, category));
-                    }
+                if(type == 2){
+                    expenses.add(new Expense(amount, currency, datetime, category));
                 }
-                    
+
             }
+            else{
+                if(type == 1){
+                    expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
+                }
+                if(type == 2){
+                    expenses.add(new Expense(amount, currency, datetime, category));
+                }
+            }
+
+        }
 
         sca.close();
 
@@ -406,7 +406,7 @@ public class ExpenseTracker {
 
     }
 
-   
+
 
     public void viewExpenses(){
 
@@ -439,6 +439,12 @@ public class ExpenseTracker {
         }
     }
 
+    public void viewBudget(){
+        for(Budget b: budgets){
+            System.out.println(b.getBudgetSummary());
+        }
+    }
+
 
 
 
@@ -450,7 +456,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay() == (expDate.getDay())){
+                    && date.getDay().equals(expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -466,7 +472,7 @@ public class ExpenseTracker {
             DateTime expDate = exp.getExpenseDateTime();
 
             if(date.getYear().equals(expDate.getYear()) && date.getMonth().equals(expDate.getMonth())
-                    && date.getDay() == (expDate.getDay())){
+                    && date.getDay().equals(expDate.getDay())){
                 totalExpense = totalExpense + exp.getExpenseAmount();
                 expenseCount++;
             }
@@ -574,7 +580,7 @@ public class ExpenseTracker {
         //app.addBudget();
         app.recordExpense(user1);
 
-       
+
 
 
         sc.close();
