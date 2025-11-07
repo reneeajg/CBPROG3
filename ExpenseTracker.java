@@ -539,7 +539,6 @@ public class ExpenseTracker {
 
     public float getMonthlyTotalExp(String month, String year){
         float totalExpense = 0;
-        viewMonthlyExpense(month,year);
         for(Expense exp: expenses){
             DateTime expDate = exp.getExpenseDateTime();
 
@@ -750,13 +749,58 @@ public class ExpenseTracker {
             }
 
             if(choice == 5){
+                
+                int view = 0;
+                
+                while(view < 1 || view > 4){
+                    
+                    System.out.println("[1] View Daily Expense");
+                    System.out.println("[2] View Monthly Expense");
+                    System.out.println("[3] View by Category");
+                    System.out.println("[4} View All");
+                    System.out.println("Select how you wish to view your recorded expenses: ");
+                    view = sc.nextInt();
+                }
+                
+                if(view == 1){
+                    app.viewDailyExpense(new DateTime("2025","10", "1"));
+                }
+                
+                else if (view == 2){
+                    app.viewMonthlyExpense("10", "2025");
+                }
+                
+                else if (view == 3){
+                    app.viewExpensesbyCat("GROCERY");
+                }
+                else {
+                    app.viewExpenses();
+                }
 
                 quit = true;
 
             }
 
             if(choice == 6){
+                
+                int view6 = 0;
 
+                while(view6 < 1 || view6 > 2){
+
+                    System.out.println("[1] View Daily Average Expense");
+                    System.out.println("[2] View Expense Percentage of a Category: ");
+                    System.out.println("Select your choice: ");
+                    view6 = sc.nextInt();
+                }
+                
+                if (view6 == 1){
+                    app.viewMonthlyExpense("10", "2025");
+                    System.out.println("Daily Average: " + app.getDailyAve("10", "2025"));
+                }
+                else{
+                    System.out.println("You are spending" + app.getCatPercentage("GROCERY") * 100 + " on the GROCERY category");
+                }
+                
                 quit = true;
 
             }
