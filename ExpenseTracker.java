@@ -345,9 +345,25 @@ public class ExpenseTracker {
             else{
                 if(type == 1){
                     expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, datetime, category));
+                    for(Budget b: budgets) {
+                        //decrease the budget in that category
+                        if (b.getCategory().equalsIgnoreCase(category)) {
+                            float budget = b.getBudgetAmt();
+                            budget = budget - amount;
+                            b.setBudgetAmt(budget);
+                        }
+                    }    
                 }
                 if(type == 2){
                     expenses.add(new Expense(amount, currency, datetime, category));
+                    for(Budget b: budgets) {
+                        //decrease the budget in that category
+                        if (b.getCategory().equalsIgnoreCase(category)) {
+                            float budget = b.getBudgetAmt();
+                            budget = budget - amount;
+                            b.setBudgetAmt(budget);
+                        }
+                    }
                 }
             }
 
@@ -397,6 +413,17 @@ public class ExpenseTracker {
         for(Budget b: budgets){
             System.out.println(b.getBudgetSummary());
         }
+    }
+
+    public float getTotalBudget(){
+
+        float total = 0;
+
+        for(Budget b: budgets){
+            total =+ b.getBudgetAmt();
+        }
+
+        return total;
     }
 
 
