@@ -591,6 +591,10 @@ public class ExpenseTracker {
         String mayaAcc = "BA30001";
         String currency = "PHP";
 
+        user1.addBank("GCASH", gcashAcc);
+        user1.addBank("BPI", bpiAcc);
+        user1.addBank("MAYA", mayaAcc);
+
         app.expenses.add(new Expense("GCASH", gcashAcc, 1200, currency, "REF1001", "ACC5001",
                 new DateTime("2025", "10", "1"), "GROCERY"));
         app.expenses.add(new Expense("GCASH", gcashAcc, 3500, currency, "REF1001", "ACC5001",
@@ -859,4 +863,5 @@ public class ExpenseTracker {
 
 
 }
+
 
