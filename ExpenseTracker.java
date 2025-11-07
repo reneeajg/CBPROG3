@@ -78,16 +78,37 @@ public class ExpenseTracker {
 
     }*/
 
-    public void viewExpensesbyCat(String category){
-        int counter = 1;
-        System.out.println(("EXPENSE ID | AMOUNT | DATE"));
+    public void viewExpenses(){
+
+        System.out.println("EXPENSE SUMMARY");
+
         for(Expense e: expenses){
-            if(e.getExpenseCategory().equals(category)){
-                System.out.println(e.getExpenseID() + counter + " | " + e.getExpenseAmount() + " | " +
-                        " | " + e.getDate()); // this is not complete idk how to do it paaaa
+            System.out.println(e.getExpenseSummary());
+        }
+        System.out.println("Total Expenses: " + getTotalExpense());
+    }
+
+    public void viewExpensesbyCat(String category){
+
+        System.out.println("SHOWING EXPENSES FOR " + category + "CATEGORY");
+
+        for(Expense e: expenses){
+            String expCat = e.getExpenseCategory();
+
+            if (expCat.equalsIgnoreCase(category)) {
+                System.out.println(e.getExpenseSummary());
+            }
+        }
+
+        System.out.println("Total: " + getTotalCatExp(category));
+
+        for(Budget b: budgets){
+            if(b.getCategory().equalsIgnoreCase(category)){
+                System.out.println("Remaining budget: " + b.getBudgetAmt(category));
             }
         }
     }
+
 
 
 
