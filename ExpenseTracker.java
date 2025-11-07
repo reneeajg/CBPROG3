@@ -37,52 +37,6 @@ public class ExpenseTracker {
         return true;
     }
 
-   /* public void addBudget(float amount, DateTime start, DateTime end, String category){
-        budgets.add(new Budget(amount, start, end, category));
-    }
-
-    public void addBudget(float amount, DateTime start, DateTime end){
-        budgets.add(new Budget(amount, start, end));
-    }
-
-
-    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
-                              DateTime dateTime, String category){
-        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime,category));
-
-        for(Budget b: budgets){
-            //decrease the budget in that category
-            if(b.getCategory() != null && b.getCategory().equals(category)){
-                float budget = b.getBudgetAmt();
-                budget = budget - amount;
-                b.setBudgetAmt(budget);
-            }
-        }
-    }
-
-    public void recordExpense(String bankName, String bankAccNum, float amount, String currency, String refNum, String receiverAccNo,
-                              DateTime dateTime){
-        expenses.add(new Expense(bankName, bankAccNum, amount, currency, refNum, receiverAccNo, dateTime));
-    }
-
-    public void recordExpense(float amount, String currency, DateTime dateTime, String category){
-        expenses.add(new Expense(amount, currency, dateTime,category));
-        //decrease the budget in that category
-        for(Budget b: budgets){
-            if(b.getCategory() != null && b.getCategory().equals(category)){
-                float budget = b.getBudgetAmt();
-                budget = budget - amount;
-                b.setBudgetAmt(budget);
-            }
-        }
-    }
-
-    public void recordExpense(float amount, String currency, DateTime dateTime){
-        expenses.add(new Expense(amount, currency, dateTime));
-    }
-
-    */
-
     public void addBudget(){
         System.out.println();
         Scanner sca = new Scanner(System.in);
