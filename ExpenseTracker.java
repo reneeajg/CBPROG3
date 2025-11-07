@@ -7,7 +7,17 @@ public class ExpenseTracker {
     User user;
     ArrayList<String> categories = new ArrayList<>();
 
+    public ArrayList<Budget> getBudgets(){
+        return budgets;
+    }
 
+    public ArrayList<Expense> getExpenses(){
+        return expenses;
+    }
+
+    public ArrayList<String> getCategories(){
+        return categories;
+    }
     public boolean login(String email, String password, User user){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -399,48 +409,12 @@ public class ExpenseTracker {
         }
     }
 
-    public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses){
-
-        DateTime bdtS = b.getBudgetStart();
-        DateTime bdtE = b.getBudgetEnd();
-        int budgetStartMonth = Integer.parseInt(bdtS.getMonth());
-        int budgetStartDay = Integer.parseInt(bdtS.getDay());
-        int budgetStartYear = Integer.parseInt(bdtS.getYear());
-        int budgetEndMonth = Integer.parseInt(bdtE.getMonth());
-        int budgetEndDay = Integer.parseInt(bdtE.getDay());
-        int budgetEndYear = Integer.parseInt(bdtE.getYear());
-
-        float remainingBudget = b.getBudgetAmt();
-
-        for(Expense curr : expenses){
-
-            DateTime dt = curr.getExpenseDateTime();
-
-            //check if expense is less than or equal to budget end date
-            if((Integer.parseInt(dt.getMonth()) <= budgetEndMonth) && (Integer.parseInt(dt.getDay()) <= budgetEndDay) && (Integer.parseInt(dt.getYear()) <= budgetEndYear)){
-
-                //check if expense is greater than or equal to budget start date
-                if((Integer.parseInt(dt.getMonth()) >= budgetStartMonth) && (Integer.parseInt(dt.getDay()) >= budgetStartDay) && (Integer.parseInt(dt.getYear()) >= budgetStartYear)){
-
-                    remainingBudget = (remainingBudget - curr.getExpenseAmount());
-
-                }
-
-            }
-
-        }
-
-        return remainingBudget;
-
-    }
-
-
-    public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses, boolean underCategory){
+   public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses, boolean underCategory){
 
         DateTime bdtS = b.getBudgetStart();
         DateTime bdtE = b.getBudgetEnd();
 
-        String budCat = b.getCategory();
+        
 
         int budgetStartMonth = Integer.parseInt(bdtS.getMonth());
         int budgetStartDay = Integer.parseInt(bdtS.getDay());
@@ -462,10 +436,16 @@ public class ExpenseTracker {
                 //check if expense is greater than or equal to budget start date
                 if((Integer.parseInt(dt.getMonth()) >= budgetStartMonth) && (Integer.parseInt(dt.getDay()) >= budgetStartDay) && (Integer.parseInt(dt.getYear()) >= budgetStartYear)){
 
-                    //check if budget
-                    if(currCat.equalsIgnoreCase(budCat)){
+                    if(underCategory == true){
+
+                        String budCat = b.getCategory();
+
+                        if(currCat.equalsIgnoreCase(budCat)){
                         remainingBudget = (remainingBudget - curr.getExpenseAmount());
+                        }
+
                     }
+                    
 
                 }
 
@@ -477,6 +457,7 @@ public class ExpenseTracker {
 
     }
 
+    
     public void viewDailyExpense(DateTime date){
         System.out.println("Expenses for:" + date.getDay() + '-' + date.getMonth() + "-" + date.getYear());
         for(Expense exp: expenses){
@@ -680,7 +661,7 @@ public class ExpenseTracker {
             int choice = 0;
             boolean validChoice = false;
 
-            System.out.println("[1] Add Digital Bank\n[2] Add New Expense\n[3] Add New Budget\n[4] Add Category\n[5] View Expenses/Budgets\n[6] View Insights\n[7] Quit");
+            System.out.println("[1] Add Digital Bank\n[2] Add New Expense\n[3] Add New Budget\n[4] Add Category\n[5] View Expenses/Budgets\n[6] View Insights\n[7] View Remaining Budget\n[8] Quit");
 
             while (!validChoice){
 
@@ -733,16 +714,40 @@ public class ExpenseTracker {
 
             if(choice == 2){
 
+                app.recordExpense(user1);
+                
                 quit = true;
             }
 
             if(choice == 3){
 
+                app.addBudget();
+
+                
                 quit = true;
 
             }
 
             if(choice == 4){
+                Scanner sfour = new Scanner(System.in);
+
+                System.out.println();
+                System.out.println("EXISTING CATEGORIES:");
+                System.out.println();
+                app.displayCategories();
+
+                System.out.println("Enter a new category: ");
+                String cName = sfour.nextLine();
+                app.addCategory(cName);
+                System.out.println("New Category Added!");
+                
+                System.out.println();
+                System.out.println("EXISTING CATEGORIES:");
+                System.out.println();
+                app.displayCategories();
+
+                sfour.close();
+
 
                 quit = true;
 
@@ -805,6 +810,27 @@ public class ExpenseTracker {
 
                 }
 
+                if(choice == 7){
+                Scanner ss = new Scanner(System.in);
+                float rm = 0;
+
+                System.out.println();
+                System.out.println("DISPLAYING ALL RECORDED BUDGETS:");
+                app.displayAllBudgets();
+
+                System.out.println();
+                System.out.print("Enter index of budget to see how much of the budget is left: ");
+                int b = ss.nextInt();
+                
+                System.out.println();
+                rm = app.calculateBudgetMinusExpenses(app.getBudgets().get(b-1), app.getExpenses(), false);
+                System.out.println("Remaining: " + rm);
+
+
+                ss.close();
+                quit = true;
+            }
+
                 quit = true;
 
             }
@@ -820,6 +846,7 @@ public class ExpenseTracker {
 
         sc.close();
     }
+
 
 
 }
