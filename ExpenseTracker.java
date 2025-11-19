@@ -18,6 +18,8 @@ public class ExpenseTracker {
     public ArrayList<String> getCategories(){
         return categories;
     }
+
+
     public boolean login(String email, String password, User user){
         return email.equals(user.getUserEmail()) && password.equals(user.getUserPassword());
     }
@@ -35,12 +37,10 @@ public class ExpenseTracker {
         }
     }
 
-       public void displayAllBudgets(){
+    public void displayAllBudgets(){
         System.out.println();
-        System.out.println("BUDGET AMOUNT | BUDGET START DATE | BUDGET END DATE | BUDGET CATEGORY");
-        for(int i = 0; i < budgets.size(); i++){
-            System.out.print((i+1)  + ". ");
-            System.out.print(budgets.get(i).getBudgetAmt() + " " + budgets.get(i).getBudgetStart().getDay() + "-" + budgets.get(i).getBudgetStart().getMonth() + "-" +  budgets.get(i).getBudgetStart().getYear() + " " + budgets.get(i).getCategory());
+         for(Budget b: budgets){
+            System.out.println(b.getBudgetSummary());
         }
     }
 
@@ -418,7 +418,8 @@ public class ExpenseTracker {
         }
     }
 
-   public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses, boolean underCategory){
+
+    public float calculateBudgetMinusExpenses(Budget b, ArrayList<Expense> expenses, boolean underCategory){
 
         DateTime bdtS = b.getBudgetStart();
         DateTime bdtE = b.getBudgetEnd();
@@ -437,7 +438,7 @@ public class ExpenseTracker {
         for(Expense curr : expenses){
 
             DateTime dt = curr.getExpenseDateTime();
-            String currCat = curr.getExpenseCategory();
+            
 
             //check if expense is less than or equal to budget end date
             if((Integer.parseInt(dt.getMonth()) <= budgetEndMonth) && (Integer.parseInt(dt.getDay()) <= budgetEndDay) && (Integer.parseInt(dt.getYear()) <= budgetEndYear)){
@@ -449,12 +450,21 @@ public class ExpenseTracker {
 
                         String budCat = b.getCategory();
 
-                        if(currCat.equalsIgnoreCase(budCat)){
-                        remainingBudget = (remainingBudget - curr.getExpenseAmount());
+                        if(curr.getExpenseCategory() != null){
+                            
+                            String currCat = curr.getExpenseCategory();
+
+                            if(currCat.equalsIgnoreCase(budCat)){
+                            remainingBudget = (remainingBudget - curr.getExpenseAmount());
+                            }
+
                         }
+                        
 
                     }
-                    
+                    else{
+                        remainingBudget = (remainingBudget - curr.getExpenseAmount());
+                    }
 
                 }
 
@@ -466,7 +476,6 @@ public class ExpenseTracker {
 
     }
 
-    
     public void viewDailyExpense(DateTime date){
         System.out.println("Expenses for:" + date.getDay() + '-' + date.getMonth() + "-" + date.getYear());
         for(Expense exp: expenses){
@@ -582,6 +591,7 @@ public class ExpenseTracker {
         User user1 = new User("mariabclara@dlsu.edu.ph",  "Maria", "Borja",  "Clara");
         user1.setUserPassword("passwrod");
 
+ 
         /*=============EXPENSES=================*/
 
 
@@ -590,6 +600,12 @@ public class ExpenseTracker {
         String bpiAcc = "BA20001";
         String mayaAcc = "BA30001";
         String currency = "PHP";
+
+        app.addCategory("GROCERY");
+        app.addCategory("SHOPPING");
+        app.addCategory("UTILITY");
+        app.addCategory("SUBSCRIPTION");
+        app.addCategory("TRANSPORTATION");
 
         user1.addBank("GCASH", gcashAcc);
         user1.addBank("BPI", bpiAcc);
@@ -681,7 +697,7 @@ public class ExpenseTracker {
                 System.out.print("Enter your choice: ");
                 choice = sc.nextInt();
 
-                if(choice < 0 || choice > 7){
+                if(choice < 0 && choice > 7){
                     System.out.println("Error: Please input 1-7 only");
                 }
                 else
@@ -690,7 +706,7 @@ public class ExpenseTracker {
             }
 
 
-            if(choice == 7){
+            if(choice == 8){
                 quit = true;
             }
 
@@ -728,7 +744,7 @@ public class ExpenseTracker {
             if(choice == 2){
 
                 app.recordExpense(user1);
-                
+
                 quit = true;
             }
 
@@ -736,7 +752,6 @@ public class ExpenseTracker {
 
                 app.addBudget();
 
-                
                 quit = true;
 
             }
@@ -767,11 +782,11 @@ public class ExpenseTracker {
             }
 
             if(choice == 5){
-
+                
                 int view = 0;
-
+                
                 while(view < 1 || view > 4){
-
+                    
                     System.out.println("[1] View Daily Expense");
                     System.out.println("[2] View Monthly Expense");
                     System.out.println("[3] View by Category");
@@ -779,15 +794,15 @@ public class ExpenseTracker {
                     System.out.println("Select how you wish to view your recorded expenses: ");
                     view = sc.nextInt();
                 }
-
+                
                 if(view == 1){
                     app.viewDailyExpense(new DateTime("2025","10", "1"));
                 }
-
+                
                 else if (view == 2){
                     app.viewMonthlyExpense("10", "2025");
                 }
-
+                
                 else if (view == 3){
                     app.viewExpensesbyCat("GROCERY");
                 }
@@ -800,7 +815,7 @@ public class ExpenseTracker {
             }
 
             if(choice == 6){
-
+                
                 int view6 = 0;
 
                 while(view6 < 1 || view6 > 2){
@@ -810,20 +825,20 @@ public class ExpenseTracker {
                     System.out.println("Select your choice: ");
                     view6 = sc.nextInt();
                 }
-
+                
                 if (view6 == 1){
                     app.viewMonthlyExpense("10", "2025");
                     System.out.println("Daily Average: " + app.getDailyAve("10", "2025"));
                 }
                 else{
-                    System.out.println("You spent " + (app.getCatPercentage("GROCERY") * 100) + "% in the GROCERY category");
-                    System.out.println("You spent " + (app.getCatPercentage("TRANSPORTATION") * 100) + "% in the TRANSPORTATION category");
-                    System.out.println("You spent " + (app.getCatPercentage("SUBSCRIPTION") * 100) + "% in the SUBSCRIPTION category");
-                    System.out.println("You spent " + (app.getCatPercentage("SHOPPING") * 100) + "% in the SHOPPING category");
-
+                    System.out.println("You are spending" + app.getCatPercentage("GROCERY") * 100 + " on the GROCERY category");
                 }
+                
+                quit = true;
 
-                if(choice == 7){
+            }
+
+            if(choice == 7){
                 Scanner ss = new Scanner(System.in);
                 float rm = 0;
 
@@ -836,7 +851,10 @@ public class ExpenseTracker {
                 int b = ss.nextInt();
                 
                 System.out.println();
-                rm = app.calculateBudgetMinusExpenses(app.getBudgets().get(b-1), app.getExpenses(), false);
+                if(app.getBudgets().get(b-1).getCategory() != null)
+                    rm = app.calculateBudgetMinusExpenses(app.getBudgets().get(b-1), app.getExpenses(), true);
+                else
+                    rm = app.calculateBudgetMinusExpenses(app.getBudgets().get(b-1), app.getExpenses(), false);
                 System.out.println("Remaining: " + rm);
 
 
@@ -844,14 +862,11 @@ public class ExpenseTracker {
                 quit = true;
             }
 
-                quit = true;
-
-            }
-
 
         }
 
         if(quit){
+
             System.out.println();
             System.out.println("Logged Out");
         }
@@ -861,7 +876,4 @@ public class ExpenseTracker {
     }
 
 
-
 }
-
-

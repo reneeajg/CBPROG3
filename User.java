@@ -11,6 +11,7 @@ public class User {
         this.midName = mName;
         this.Surname = sName;
         this.userID = setUserID();
+        this.defaultCurrency = "PHP";
     }
 
     private String setUserID(){
